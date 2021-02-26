@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<table>
+  <!-- {% with ''|center:10 as range %}
+  {% for _ in range %}
+    <tr>
+      {% for _ in range %}
+          <td> </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+    {% endwith %} -->
+
+<tbody>
+    <tr>
+      <td id = 'abc'>X</td>
+      <td id = 'cda'>X1</td>
+      <td id = 'dsasa'>X2</td>
+      <td id = 'dasdsad'>X3</td>
+    </tr>
+    <tr>
+      <td id = 'dsadasd'>Y</td>
+      <td id = 'dsadas'>Y1</td>
+      <td id = 'ddaAS'>Y2</td>
+      <td id = 'dsdsddssfe3w'>Y3</td>
+    </tr>
+</tbody>
+</table>
+
+<br>
+<br>
+<br>
+<!--
+{{player1.tiles}}
+
+{% for tile in p1_tiles.all %}
+
+<p>{{tile.color}}</p>
+
+{% endfor %}
+
+{% for tile in p2_tiles %}
+
+<p>{{tile.color}}</p>
+
+{% endfor %}
+
+<table>
+  {% with ''|center:10 as range %}
+  {% for _ in '123' %}
+    <tr>
+      {% for _ in range %}
+          <td> </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+    {% endwith %}
+</table>
+
+-->
+
+
+
+<script src="{% static 'js/game.js' %}" type="text/javascript" ></script>
+
+
+
+
+
+
+
+{% endblock %}
