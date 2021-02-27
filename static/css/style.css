@@ -4,3 +4,20 @@ td {
   height: 50px;
   background: yellow;
 }
+
+
+
+h3 {
+  font-size: 30px;
+  border: 1px solid black;
+  background:#edd8b4;
+  border-radius: 30px
+}
+
+.tiles {
+  width: 60px;
+  height: 80px;
+  background: #f7e0ba;
+  text-align: center;
+  padding: 10px;
+}

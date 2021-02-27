@@ -2,9 +2,9 @@
 {% block content %}
 {% load static %}
 
-
+<!--
 <table>
-  <!-- {% with ''|center:10 as range %}
+  {% with ''|center:10 as range %}
   {% for _ in range %}
     <tr>
       {% for _ in range %}
@@ -12,14 +12,14 @@
       {% endfor %}
     </tr>
     {% endfor %}
-    {% endwith %} -->
+    {% endwith %}
 
 <tbody>
     <tr>
-      <td id = 'abc'>X</td>
-      <td id = 'cda'>X1</td>
-      <td id = 'dsasa'>X2</td>
-      <td id = 'dasdsad'>X3</td>
+      <td id = '1'>X</td>
+      <td id = '2'>X1</td>
+      <td id = '3'>X2</td>
+      <td id = '4'>X3</td>
     </tr>
     <tr>
       <td id = 'dsadasd'>Y</td>
@@ -29,18 +29,6 @@
     </tr>
 </tbody>
 </table>
-
-<br>
-<br>
-<br>
-<!--
-{{player1.tiles}}
-
-{% for tile in p1_tiles.all %}
-
-<p>{{tile.color}}</p>
-
-{% endfor %}
 
 {% for tile in p2_tiles %}
 
@@ -60,7 +48,20 @@
     {% endwith %}
 </table>
 
--->
+ -->
+
+<br>
+<br>
+<br>
+
+{{player1.tiles}}
+
+{% for tile in tiles %}
+
+<div class = 'tiles' id={{tile.pk}}> <h3 style = 'color:{{tile.color}}'>{{tile.number}}</h3> </div>
+
+{% endfor %}
+
 
 
 

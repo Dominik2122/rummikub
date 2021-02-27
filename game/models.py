@@ -13,6 +13,8 @@ class Tile(models.Model):
     number = models.CharField(max_length=5)
     color = models.CharField(max_length=20)
     visible = models.BooleanField(default=False)
+    pos_left = models.CharField( default=  "", blank=True, max_length=5)
+    pos_top = models.CharField( default = "",  blank=True, max_length=5)
 
 
 class Game(models.Model):

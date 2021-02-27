@@ -52,7 +52,14 @@ beforeSend: function(xhr, settings) {
 });
 
 
-
+function placeTile(lists) {
+  lists.forEach(list => {
+  var tile = document.getElementById(list[2]);
+  tile.style.position = "absolute";
+  tile.style.left = list[1]+'px';
+  tile.style.top = list[0]+'px';
+})
+};
 
 function update(){
 $.ajax({
@@ -61,6 +68,7 @@ $.ajax({
     data : { },
 
     success : function(json) {
+      placeTile(json['tiles_positions'])
 
 },
         error : function() {}
@@ -72,28 +80,32 @@ $(document).ready(function(){
   window.setInterval(()=>{update()}, 2000)
 })
 
-
-
-
-
-
 //function that sends data about draging
-$('td').draggable({
+$('div').draggable({
      stop: function(event, ui){
-      var td = $(this)
+      var td = $(this)[0];
+      var tileId = td.id;
       var stopVal = $(this).position();
-      console.log(stopVal);
-      console.log(td[0].id)
+      console.log(tileId)
+      $.ajax({
+          url : "",
+          type : "GET",
+          data : { 'position' : stopVal,
+                    'tile' : tileId },
 
-
-// ajax here
-
-
-
+          success : function(json) {},
+              error : function() {}
+      });
     },
-      grid: [50,50],
    }
 );
+
+
+
+
+
+
+
 
 
 
