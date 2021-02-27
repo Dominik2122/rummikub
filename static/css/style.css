@@ -20,4 +20,42 @@ h3 {
   background: #f7e0ba;
   text-align: center;
   padding: 10px;
+  z-index: 9;
+}
+
+.others {
+  height: 500px;
+}
+
+.other {
+ width: 60px;
+ float: left;
+ margin: 10px
+}
+
+.players {
+ width: 60px;
+ float: left;
+ margin: 10px
+}
+
+
+.board {
+  height: 600px;
+  margin-left: 15px;
+  background: #adb4ed
+}
+
+
+.rack1, .rack2 {
+  position:absolute;
+  bottom:10px;
+  background: black;
+  width: 1000px;
+  height: 200px;
+  position: absolute;
+margin-left: auto;
+margin-right: auto;
+left: 0;
+right: 0;
 }

@@ -52,14 +52,67 @@ beforeSend: function(xhr, settings) {
 });
 
 
+
+
+
+
 function placeTile(lists) {
+  var board = $('.board');
+  var rack1 = $('.rack1');
+  var rack2 = $('.rack2');
+  var others = $('.others');
+  // console.log(board.position(), board.width(), board.height())
+  //
+
+  board.empty();
+  rack1.empty();
+  rack2.empty();
+  others.empty();
   lists.forEach(list => {
-  var tile = document.getElementById(list[2]);
-  tile.style.position = "absolute";
-  tile.style.left = list[1]+'px';
-  tile.style.top = list[0]+'px';
+  var top = list[0] + 'px'
+  var left = list[1] + 'px'
+  if (list[5]=='tb'){
+  board.append(`<div class = 'tiles' id="${list[2]}" style='position:absolute; left:${left}; top:${top};'> <h3 style='color:${list[3]}'>${list[4]}</h3> </div>`)
+} else if (list[5]=='p1'){
+  rack1.append(`<div class = 'tiles players' id="${list[2]}"> <h3 style='color:${list[3]}'>${list[4]}</h3> </div>`)
+}
+else if (list[5]=='p2'){
+  rack2.append(`<div class = 'tiles players' id="${list[2]}"> <h3 style='color:${list[3]}'>${list[4]}</h3> </div>`)
+}
+  else {
+  others.append(`<div class = 'tiles  other' id="${list[2]}"> <h3 style='color:${list[3]}'> </h3></div>`)
+  };
+
 })
+
+//function that sends data about draging
+$('.tiles').draggable({
+ stop: function(event, ui){
+  var td = $(this)[0];
+  var tileId = td.id;
+  var stopVal = $(this).position();
+  console.log(stopVal)
+  $.ajax({
+      url : "",
+      type : "GET",
+      data : { 'position' : stopVal,
+                'tile' : tileId },
+      success : function(json) {},
+          error : function() {}
+  });
+},
+});
 };
+
+
+
+document.addEventListener('mousemove', (event) => {
+	console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
+});
+
+
+
+
 
 function update(){
 $.ajax({
@@ -79,35 +132,3 @@ $.ajax({
 $(document).ready(function(){
   window.setInterval(()=>{update()}, 2000)
 })
-
-//function that sends data about draging
-$('div').draggable({
-     stop: function(event, ui){
-      var td = $(this)[0];
-      var tileId = td.id;
-      var stopVal = $(this).position();
-      console.log(tileId)
-      $.ajax({
-          url : "",
-          type : "GET",
-          data : { 'position' : stopVal,
-                    'tile' : tileId },
-
-          success : function(json) {},
-              error : function() {}
-      });
-    },
-   }
-);
-
-
-
-
-
-
-
-
-
-
-
-// tileDrag('#abc') //testing function

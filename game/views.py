@@ -30,6 +30,7 @@ class CreateGame(LoginRequiredMixin, CreateView):
                     nr = tile.pk
                     tile = models.Tile.objects.get(pk=nr)
                     game.tiles.add(tile)
+                    game.tiles.add(tile)
                     game.save()
             tiles = game.tiles.all()
             list_of_tiles = list(tiles)
@@ -39,15 +40,14 @@ class CreateGame(LoginRequiredMixin, CreateView):
                 if i % 2 ==0:
                     x.pos_left = 2
                     x.pos_top = 2
+                    x.save()
                     game.p1_tiles.add(x)
                 else:
                     x.pos_left = 3
                     x.pos_top = 3
+                    x.save()
                     game.p2_tiles.add(x)
         return reverse("game:game", kwargs={"pk":self.object.pk})
-
-
-
 
 
 class GameDet(LoginRequiredMixin, DetailView):
@@ -56,23 +56,46 @@ class GameDet(LoginRequiredMixin, DetailView):
 
 
     def get(self, request, *args, **kwargs):
+        game = self.get_object()
         if request.is_ajax():
             if 'position[top]' in request.GET:
                 top = request.GET['position[top]']
                 left = request.GET['position[left]']
                 tileId = request.GET['tile']
                 tile = models.Tile.objects.get(id = tileId)
-                tile.pos_left = left
-                tile.pos_top = top
-                tile.save()
+                if tile.pos_top == "1" and self.request.user == game.player1:
+                    tile.pos_top = "2"
+                    tile.pos_left ="2"
+                    tile.save()
+                    game.p1_tiles.add(tile)
+                    game.save()
+                elif tile.pos_top == '1' and  self.request.user == game.player2:
+                    tile.pos_top = "3"
+                    tile.pos_left = "3"
+                    tile.save()
+                    game.p2_tiles.add(tile)
+                    game.save()
+                else:
+                    tile.pos_left = left
+                    tile.pos_top = top
+                    tile.save()
+
             tiles = self.get_object().tiles.all()
             tiles_positions = []
             for tile in tiles:
                 top = str(tile.pos_top)
                 left = str(tile.pos_left)
                 tile_id = str(tile.pk)
-                if top != '1' and top != '2' and top != '3':
-                    tiles_positions.append([top, left, tile_id])
+                color = str(tile.color)
+                number = str(tile.number)
+                if top == '2':
+                    tiles_positions.append([top, left, tile_id, color, number, 'p1'])
+                elif top == '3':
+                    tiles_positions.append([top, left, tile_id, color, number, 'p2'])
+                elif top != '1':
+                    tiles_positions.append([top, left, tile_id, color, number, 'tb'])
+                else:
+                    tiles_positions.append([top, left, tile_id, color, number, 'un'])
 
             return JsonResponse({'tiles_positions':tiles_positions})
 
@@ -84,9 +107,10 @@ class GameDet(LoginRequiredMixin, DetailView):
         game = models.Game.objects.get(pk=int(self.kwargs['pk']))
         context = super(GameDet, self).get_context_data(**kwargs)
         context['game'] = game
+        context['user'] = self.request.user
         context['player1'] = game.player1
         context['p1_tiles'] = game.p1_tiles.all()
-        context['player1'] = game.player1
-        context['p1_tiles'] = game.p1_tiles.all()
+        context['player2'] = game.player2
+        context['p2_tiles'] = game.p2_tiles.all()
         context['tiles'] = game.tiles.all()
         return context
