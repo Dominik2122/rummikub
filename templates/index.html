@@ -5,11 +5,13 @@
 
     <h1 class="title">Games:</h1>
 					<ul>
-					{# {% for game in games_list %}
+					{% for game in games_list %}
 					<li> {{game.id}}  <a href="{% url 'game:game' pk=game.id %}"><span>Play</span></a></li>
 
-					{% endfor %} #}
+					{% endfor %}
 					</ul>
-{# <button onclick="new_game()" class="start">New game</button> #}
+
+
+
 
 {% endblock %}

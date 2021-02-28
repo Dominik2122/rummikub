@@ -52,6 +52,13 @@ beforeSend: function(xhr, settings) {
 });
 
 
+function offset(el) {
+    var rect = el.getBoundingClientRect(),
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+}
+
 
 
 
@@ -62,28 +69,48 @@ function placeTile(lists) {
   var rack2 = $('.rack2');
   var others = $('.others');
   // console.log(board.position(), board.width(), board.height())
+  // console.log(rack1.position(), rack1.width(),rack1.height())
   //
 
   board.empty();
   rack1.empty();
   rack2.empty();
   others.empty();
+  var p1List = [];
+  var p2List = [];
+  var x = 0
   lists.forEach(list => {
   var top = list[0] + 'px'
-  var left = list[1] + 'px'
+  var left = list[1] + 'px';
   if (list[5]=='tb'){
   board.append(`<div class = 'tiles' id="${list[2]}" style='position:absolute; left:${left}; top:${top};'> <h3 style='color:${list[3]}'>${list[4]}</h3> </div>`)
 } else if (list[5]=='p1'){
   rack1.append(`<div class = 'tiles players' id="${list[2]}"> <h3 style='color:${list[3]}'>${list[4]}</h3> </div>`)
+  p1List.push(list[2])
 }
 else if (list[5]=='p2'){
   rack2.append(`<div class = 'tiles players' id="${list[2]}"> <h3 style='color:${list[3]}'>${list[4]}</h3> </div>`)
+  p2List.push(list[2])
 }
-  else {
-  others.append(`<div class = 'tiles  other' id="${list[2]}"> <h3 style='color:${list[3]}'> </h3></div>`)
+  else if (x < 42) {
+  others.append(`<div class = 'tiles  other' id="${list[2]}"> <h3 style='color:${list[3]}'> </h3></div>`);
+  x +=1
   };
 
 })
+
+
+var boardOffset = offset(board[0]);
+if(rack1.length != 0){
+  var rack1Offset = offset(rack1[0]);
+} else{
+  var rack1Offset = offset(rack2[0]);
+}
+
+var boardLeft= boardOffset.left
+var boardTop= boardOffset.top
+var rack1Left= rack1Offset.left
+var rack1Top= rack1Offset.top
 
 //function that sends data about draging
 $('.tiles').draggable({
@@ -91,7 +118,21 @@ $('.tiles').draggable({
   var td = $(this)[0];
   var tileId = td.id;
   var stopVal = $(this).position();
-  console.log(stopVal)
+  if (p1List.includes(tileId) || p2List.includes(tileId)) {
+
+  if (stopVal['top']>-100 && p1List.includes(tileId)){
+    stopVal['top']=2
+    stopVal['left']=2
+  } else if  (stopVal['top']>-100 && p2List.includes(tileId)) {
+    stopVal['top']=3
+    stopVal['left']=3
+} else {
+  stopVal['top'] = stopVal['top']+rack1Top-boardTop+boardLeft-5
+  stopVal['left'] = stopVal['left']+rack1Left-boardLeft+boardTop/2-5
+}
+}
+
+
   $.ajax({
       url : "",
       type : "GET",
@@ -105,10 +146,10 @@ $('.tiles').draggable({
 };
 
 
-
-document.addEventListener('mousemove', (event) => {
-	console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
-});
+//
+// document.addEventListener('mousemove', (event) => {
+// 	console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
+// });
 
 
 

@@ -23,15 +23,30 @@ class CreateGame(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         game = models.Game.objects.get(pk=int(self.object.pk))
         if not game.tiles.exists():
-            for i in ['red', 'blue', 'yellow', 'black']:
+            for i in ['red', 'blue', '#ffaa00', 'black']:
                 for j in range(13):
                     tile = models.Tile(color=i, number = int(int(j)+1), pos_top = 1, pos_left = 1)
                     tile.save()
                     nr = tile.pk
                     tile = models.Tile.objects.get(pk=nr)
                     game.tiles.add(tile)
+                    game.save()
+                for j in range(13):
+                    tile = models.Tile(color=i, number = int(int(j)+1), pos_top = 1, pos_left = 1)
+                    tile.save()
+                    nr = tile.pk
+                    tile = models.Tile.objects.get(pk=nr)
                     game.tiles.add(tile)
                     game.save()
+
+            joker1 = models.Tile(color = 'red', number="J", pos_left=1, pos_top=1)
+            joker2 = models.Tile(color = 'black', number="J", pos_left=1, pos_top=1)
+            joker1.save()
+            joker2.save()
+            game.tiles.add(joker1)
+            game.save()
+            game.tiles.add(joker2)
+            game.save()
             tiles = game.tiles.all()
             list_of_tiles = list(tiles)
             random.shuffle(list_of_tiles)
@@ -63,6 +78,9 @@ class GameDet(LoginRequiredMixin, DetailView):
                 left = request.GET['position[left]']
                 tileId = request.GET['tile']
                 tile = models.Tile.objects.get(id = tileId)
+                print(top)
+                print(left)
+
                 if tile.pos_top == "1" and self.request.user == game.player1:
                     tile.pos_top = "2"
                     tile.pos_left ="2"
