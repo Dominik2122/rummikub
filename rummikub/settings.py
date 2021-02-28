@@ -24,9 +24,9 @@ STATIC_DIR = Path.joinpath(BASE_DIR, 'static')
 SECRET_KEY = 't6#em6v9_dxluf(sv)j*ed1)8bfnuhp3p-ii94gsr+ayye(93+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG =  False
 
-ALLOWED_HOSTS = ['https://my-rummikub-game.herokuapp.com/', 'http://127.0.0.1:8000/']
+ALLOWED_HOSTS = ['https://my-rummikub-game.herokuapp.com/', '127.0.0.1:8000/']
 
 
 # Application definition
@@ -44,7 +44,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
