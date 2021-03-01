@@ -8,6 +8,7 @@ from django.http import request
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.http import JsonResponse
+import random
 
 CurrentUser = get_user_model()
 import random
@@ -43,9 +44,15 @@ class CreateGame(LoginRequiredMixin, CreateView):
             joker1.save()
             joker2.save()
             game.tiles.add(joker1)
-            game.save()
             game.tiles.add(joker2)
             game.save()
+            x = random.randint(0, 2)
+            if x==0:
+                game.start_player = game.player1
+            else:
+                game.start_player = game.player2
+            game.save()
+            print(game.start_player)
             tiles = game.tiles.all()
             list_of_tiles = list(tiles)
             random.shuffle(list_of_tiles)
@@ -61,10 +68,8 @@ class CreateGame(LoginRequiredMixin, CreateView):
                     x.pos_top = 3
                     x.save()
                     game.p2_tiles.add(x)
+            game.save()
         return reverse("game:game", kwargs={"pk":self.object.pk})
-
-
-start_player = ''
 
 
 class GameDet(LoginRequiredMixin, DetailView):
@@ -73,13 +78,9 @@ class GameDet(LoginRequiredMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         game = self.get_object()
+        start_player = game.start_player
         if request.is_ajax():
-            if 'position[top]' in request.GET:
-                if request.user == game.player1:
-                    start_player = game.player2
-                else:
-                    start_player = game.player1
-                print(start_player)
+            if 'position[top]' in request.GET and request.user == start_player:
                 top = request.GET['position[top]']
                 left = request.GET['position[left]']
                 tileId = request.GET['tile']
@@ -100,7 +101,12 @@ class GameDet(LoginRequiredMixin, DetailView):
                     tile.pos_left = left
                     tile.pos_top = top
                     tile.save()
-
+            if 'p' in request.GET and request.user == start_player:
+                if request.user == game.player1:
+                    game.start_player = game.player2
+                else:
+                    game.start_player = game.player1
+                game.save()
             tiles = self.get_object().tiles.all()
             tiles_positions = []
             for tile in tiles:

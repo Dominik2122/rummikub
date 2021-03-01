@@ -136,20 +136,26 @@ $('.tiles').draggable({
       url : "",
       type : "GET",
       data : { 'position' : stopVal,
-                'tile' : tileId },
+                'tile' : tileId},
       success : function(json) {},
           error : function() {}
   });
+
+
 },
 });
 };
 
 
-//
-// document.addEventListener('mousemove', (event) => {
-// 	console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
-// });
-
+$('#changePlayer').click(()=>{
+$.ajax({
+    url : "",
+    type : "GET",
+    data : { 'p' : '1'},
+    success : function(json) {},
+        error : function() {}
+});
+})
 
 
 
@@ -162,13 +168,13 @@ $.ajax({
 
     success : function(json) {
       placeTile(json['tiles_positions'], json['currentPlayer'])
-
 },
         error : function() {}
 })
 }
 
 
+
 $(document).ready(function(){
-  window.setInterval(()=>{update()}, 2000)
+  window.setInterval(()=>{update()}, 3500)
 })

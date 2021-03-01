@@ -24,7 +24,6 @@ class Game(models.Model):
     tiles = models.ManyToManyField(Tile, blank = True, related_name = 'tiles')
     p1_tiles = models.ManyToManyField(Tile, blank = True, related_name = 'p1_tiles')
     p2_tiles = models.ManyToManyField(Tile, blank = True, related_name = 'p2_tiles')
-
-
+    start_player = models.ForeignKey(User, on_delete=models.CASCADE, blank = True, null = True)
     def get_absolute_url(self):
         return reverse('home')
