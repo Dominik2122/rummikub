@@ -28,7 +28,8 @@ h3 {
 }
 
 .others {
-  height: 80%;
+  height: 400px;
+  width: 80%
 }
 
 .other {
@@ -43,40 +44,24 @@ h3 {
 
 
 
-
-
-
-
-
-
 .board {
-  height: 100%;
+  height: 400px;
+  width: 1000px;
   margin-left: 15px;
   background: #247dd6
 }
 
 
 
-   @media (min-height:900px){
-     .board  {
-       height: 130%;
-     }
-   }
-
-
-
-
-
 
 
 .rack1, .rack2 {
-  position:absolute;
-  bottom:10px;
   background: black;
-  width: 60%;
+  width: 800px;
   height: 20%;
   position: absolute;
-margin-left: 2%;
+  margin-top: 50px;
+margin-left: 100px;
 margin-right: 10px;
 left: 0;
 right: 0;

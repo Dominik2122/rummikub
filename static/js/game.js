@@ -92,7 +92,7 @@ else if (list[5]=='p2'){
   rack2.append(`<div class = 'tiles players' id="${list[2]}"> <h3 style='color:${list[3]}'>${list[4]}</h3> </div>`)
   p2List.push(list[2])
 }
-  else if (x < 42) {
+  else if (x < 20) {
   others.append(`<div class = 'tiles  other' id="${list[2]}"> <h3 style='color:${list[3]}'> </h3></div>`);
   x +=1
   };

@@ -24,7 +24,7 @@ STATIC_DIR = Path.joinpath(BASE_DIR, 'static')
 SECRET_KEY = 't6#em6v9_dxluf(sv)j*ed1)8bfnuhp3p-ii94gsr+ayye(93+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  False
+DEBUG =  True
 
 ALLOWED_HOSTS = ['https://my-rummikub-game.herokuapp.com/', '127.0.0.1:8000/']
 
