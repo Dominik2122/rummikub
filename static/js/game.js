@@ -80,8 +80,8 @@ function placeTile(lists) {
   var p2List = [];
   var x = 0
   lists.forEach(list => {
-  var top = list[0] + 'px'
-  var left = list[1] + 'px';
+  var top = parseFloat(list[0]).toFixed(2).toString() + 'px'
+  var left = parseFloat(list[1]).toFixed(2).toString() + 'px';
   if (list[5]=='tb'){
   board.append(`<div class = 'tiles' id="${list[2]}" style='position:absolute; left:${left}; top:${top};'> <h3 style='color:${list[3]}'>${list[4]}</h3> </div>`)
 } else if (list[5]=='p1'){
@@ -127,8 +127,8 @@ $('.tiles').draggable({
     stopVal['top']=3
     stopVal['left']=3
 } else {
-  stopVal['top'] = stopVal['top']+rack1Top-boardTop+boardLeft-5
-  stopVal['left'] = stopVal['left']+rack1Left-boardLeft+boardTop/2-5
+  stopVal['top'] = (stopVal['top']+rack1Top-boardTop+boardLeft-5).toFixed()
+  stopVal['left'] = (stopVal['left']+rack1Left-boardLeft+boardTop/2-5).toFixed()
 }
 }
 
