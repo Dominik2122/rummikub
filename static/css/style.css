@@ -32,6 +32,8 @@ h3 {
   width: 80%
 }
 
+
+
 .other {
  float: left;
  margin: 10px;
@@ -55,6 +57,7 @@ h3 {
 
 
 
+
 .rack1, .rack2 {
   background: black;
   width: 800px;
@@ -65,4 +68,26 @@ margin-left: 100px;
 margin-right: 10px;
 left: 0;
 right: 0;
+}
+
+@media (max-width: 1500px) {
+  .others {
+    height: 100px;
+    width: 100%;
+  }
+  .board {
+    width: 95%;
+  }
+
+  .rack1, .rack2 {
+    width: 95%;
+    height: 20%;
+    position: absolute;
+    margin-top: 50px;
+  margin-left: 2%;
+  margin-right: 2%;
+  left: 0;
+  right: 0;
+  }
+
 }
