@@ -126,8 +126,8 @@ $('.tiles').draggable({
     stopVal['top'] =3
     stopVal['left']=3
 } else {
-  stopVal['top'] = (stopVal['top']+rack1Top-boardTop+boardLeft-5).toFixed()
-  stopVal['left'] = (stopVal['left']+rack1Left-boardLeft+boardTop/2-5).toFixed()
+  stopVal['top'] = Math.round((stopVal['top']+rack1Top-boardTop+boardLeft-5))
+  stopVal['left'] = Math.round((stopVal['left']+rack1Left-boardLeft+boardTop/2-5))
 }
 }
 
