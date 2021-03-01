@@ -80,10 +80,10 @@ class GameDet(LoginRequiredMixin, DetailView):
         game = self.get_object()
         start_player = game.start_player
         if request.is_ajax():
-            if 'position[top]' in request.GET and request.user == start_player:
-                top = request.GET['position[top]']
-                left = request.GET['position[left]']
-                tileId = request.GET['tile']
+            if 'left' in request.GET and request.user == start_player:
+                top = request.GET['to']
+                left = request.GET['left']
+                tileId = request.GET['t']
                 tile = models.Tile.objects.get(id = tileId)
                 if tile.pos_top == "1" and self.request.user == game.player1:
                     tile.pos_top = "2"

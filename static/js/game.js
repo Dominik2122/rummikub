@@ -123,7 +123,7 @@ $('.tiles').draggable({
     stopVal['top']=2
     stopVal['left']=2
   } else if  (stopVal['top']>-100 && p2List.includes(tileId)) {
-    stopVal['top']=3
+    stopVal['top'] =3
     stopVal['left']=3
 } else {
   stopVal['top'] = (stopVal['top']+rack1Top-boardTop+boardLeft-5).toFixed()
@@ -131,17 +131,18 @@ $('.tiles').draggable({
 }
 }
 
-
+var left = stopVal['left']
+var top = stopVal['top']
+console.log(left)
+console.log(top)
   $.ajax({
       url : "",
       type : "GET",
-      data : { 'position' : stopVal,
-                'tile' : tileId},
+      data : { 'left' : left, 'to':top,
+                't' : tileId},
       success : function(json) {},
           error : function() {}
   });
-
-
 },
 });
 };
