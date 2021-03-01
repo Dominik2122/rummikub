@@ -63,14 +63,11 @@ function offset(el) {
 
 
 
-function placeTile(lists) {
+function placeTile(lists, currentPlayer) {
   var board = $('.board');
   var rack1 = $('.rack1');
   var rack2 = $('.rack2');
   var others = $('.others');
-  // console.log(board.position(), board.width(), board.height())
-  // console.log(rack1.position(), rack1.width(),rack1.height())
-  //
 
   board.empty();
   rack1.empty();
@@ -99,6 +96,8 @@ else if (list[5]=='p2'){
 
 })
 
+var turn = $('#playerTurn')
+turn.text(currentPlayer)
 
 var boardOffset = offset(board[0]);
 if(rack1.length != 0){
@@ -162,7 +161,7 @@ $.ajax({
     data : { },
 
     success : function(json) {
-      placeTile(json['tiles_positions'])
+      placeTile(json['tiles_positions'], json['currentPlayer'])
 
 },
         error : function() {}

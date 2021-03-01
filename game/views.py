@@ -38,7 +38,6 @@ class CreateGame(LoginRequiredMixin, CreateView):
                     tile = models.Tile.objects.get(pk=nr)
                     game.tiles.add(tile)
                     game.save()
-
             joker1 = models.Tile(color = 'red', number="J", pos_left=1, pos_top=1)
             joker2 = models.Tile(color = 'black', number="J", pos_left=1, pos_top=1)
             joker1.save()
@@ -65,15 +64,22 @@ class CreateGame(LoginRequiredMixin, CreateView):
         return reverse("game:game", kwargs={"pk":self.object.pk})
 
 
+start_player = ''
+
+
 class GameDet(LoginRequiredMixin, DetailView):
     model = models.Game
     template_name = 'game.html'
-
 
     def get(self, request, *args, **kwargs):
         game = self.get_object()
         if request.is_ajax():
             if 'position[top]' in request.GET:
+                if request.user == game.player1:
+                    start_player = game.player2
+                else:
+                    start_player = game.player1
+                print(start_player)
                 top = request.GET['position[top]']
                 left = request.GET['position[left]']
                 tileId = request.GET['tile']
@@ -112,7 +118,8 @@ class GameDet(LoginRequiredMixin, DetailView):
                 else:
                     tiles_positions.append([top, left, tile_id, color, number, 'un'])
 
-            return JsonResponse({'tiles_positions':tiles_positions})
+            return JsonResponse({'tiles_positions':tiles_positions,
+                                'currentPlayer':start_player.username})
 
 
 

@@ -2,14 +2,10 @@ body {
     background: #b5d6f7;
 }
 
-td {
-  border: 1px solid;
-  width: 50px;
-  height: 50px;
-  background: yellow;
+
+.navbar{
+  background-color: #7cc2f7
 }
-
-
 
 h3 {
   font-size: 150%;
@@ -23,71 +19,80 @@ h3 {
   height: 60px;
   background: #f7e0ba;
   text-align: center;
-  padding: 10px;
+  padding: 5px;
   z-index: 9;
 }
 
 .others {
-  height: 400px;
-  width: 80%
+  margin-top: 10px;
+  margin-right: 15px;
+  height: 500px;
+  background-color: #7cc2f7;
 }
-
-
 
 .other {
  float: left;
- margin: 10px;
+ margin: 5px;
 }
 
 .players {
  float: left;
- margin: 10px
+ margin: 5px;
 }
-
 
 
 .board {
-  height: 400px;
-  width: 1000px;
+  height: 500px;
+  margin-top: 10px;
   margin-left: 15px;
-  background: #247dd6
+  margin-right: 15px;
+  background: #7cc2f7
 }
-
-
-
-
 
 
 .rack1, .rack2 {
   background: black;
   width: 800px;
-  height: 20%;
+  height: 150px;
   position: absolute;
-  margin-top: 50px;
-margin-left: 100px;
-margin-right: 10px;
-left: 0;
+  margin-top: 10px;
+margin-left: 15px;
+margin-right: 15px;
+left: 15px;
 right: 0;
 }
 
-@media (max-width: 1500px) {
+
+@media (max-width: 800px) {
   .others {
-    height: 100px;
-    width: 100%;
+    width: 97%;
+    height: 150px;
+    margin-left: 15px;
   }
-  .board {
-    width: 95%;
-  }
-
   .rack1, .rack2 {
-    width: 95%;
-    height: 20%;
-    position: absolute;
-    margin-top: 50px;
-  margin-left: 2%;
-  margin-right: 2%;
-  left: 0;
-  right: 0;
+    width: 97%;
   }
+}
 
+
+@media (min-width: 801px) and (max-width:1199px) {
+  .others {
+    height: 150px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .rack1, .rack2 {
+    width: 97%;
+  }
+}
+
+
+
+.info {
+	text-align: center;
+	margin-right: 15px;
+  margin-top: 10px;
+	background:  #7cc2f7;
+	padding: 10px;
+  height: 150px;
 }
