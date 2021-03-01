@@ -78,9 +78,6 @@ class GameDet(LoginRequiredMixin, DetailView):
                 left = request.GET['position[left]']
                 tileId = request.GET['tile']
                 tile = models.Tile.objects.get(id = tileId)
-                print(top)
-                print(left)
-
                 if tile.pos_top == "1" and self.request.user == game.player1:
                     tile.pos_top = "2"
                     tile.pos_left ="2"

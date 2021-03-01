@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import django_heroku
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,9 +24,8 @@ STATIC_DIR = Path.joinpath(BASE_DIR, 'static')
 SECRET_KEY = 't6#em6v9_dxluf(sv)j*ed1)8bfnuhp3p-ii94gsr+ayye(93+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  False
-
-ALLOWED_HOSTS = ['https://my-rummikub-game.herokuapp.com/', '127.0.0.1:8000/']
+DEBUG =  True
+ALLOWED_HOSTS = ['https://my-rummikub-game.herokuapp.com/', '127.0.0.1']
 
 
 # Application definition
@@ -127,5 +126,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR,]
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-
-django_heroku.settings(locals())
