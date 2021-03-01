@@ -133,8 +133,10 @@ $('.tiles').draggable({
 
 var left = stopVal['left']
 var top = stopVal['top']
-console.log(left)
-console.log(top)
+left = Math.round(left)
+top = Math.round(top)
+left = left.toFixed(1)
+top = top.toFixed(1)
   $.ajax({
       url : "",
       type : "GET",
