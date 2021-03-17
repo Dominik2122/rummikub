@@ -80,6 +80,25 @@ class GameDet(LoginRequiredMixin, DetailView):
         game = self.get_object()
         start_player = game.start_player
         if request.is_ajax():
+            if 'lewa' in request.GET:
+                top = request.GET['gora']
+                left = request.GET['lewa']
+                tileId = request.GET['tid']
+                prevTile = models.Tile.objects.filter(id=tileId, last = True)
+                print(prevTile)
+                if len(list(prevTile)) != 0:
+                    prevTile = prevTile.first()
+                    print(prevTile)
+                    prevTile.last = False
+                    prevTile.save()
+
+                tile = models.Tile.objects.get(id=tileId)
+                tile.last = True
+                tile.last_left = left
+                tile.last_top = top
+                print(tile)
+                tile.save()
+
             if 'left' in request.GET and request.user == start_player:
                 top = request.GET['to']
                 left = request.GET['left']
@@ -124,8 +143,14 @@ class GameDet(LoginRequiredMixin, DetailView):
                 else:
                     tiles_positions.append([top, left, tile_id, color, number, 'un'])
 
+            if request.user != start_player:
+                refresh_info = True
+            else:
+                refresh_info = False
+
             return JsonResponse({'tiles_positions':tiles_positions,
-                                'currentPlayer':start_player.username})
+                                'currentPlayer':start_player.username,
+                                'refresh_info':refresh_info})
 
 
 

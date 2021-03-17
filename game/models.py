@@ -15,8 +15,10 @@ class Tile(models.Model):
     visible = models.BooleanField(default=False)
     pos_left = models.CharField( default=  "", blank=True, max_length=50)
     pos_top = models.CharField( default = "",  blank=True, max_length=50)
-
-
+    last = models.BooleanField(default=False)
+    last_left = models.CharField(default = '', blank=True, max_length=50)
+    last_top = models.CharField(default = '', blank=True, max_length=50)
+    
 class Game(models.Model):
     date = models.DateField(auto_now_add=True)
     player1 = models.ForeignKey(User, related_name="player1", on_delete=models.CASCADE)

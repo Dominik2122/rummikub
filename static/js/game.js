@@ -113,13 +113,35 @@ var rack1Top= rack1Offset.top
 
 //function that sends data about draging
 $('.tiles').draggable({
- stop: function(event, ui){
-  var td = $(this)[0];
-  var tileId = td.id;
-  var stopVal = $(this).position();
-  if (p1List.includes(tileId) || p2List.includes(tileId)) {
+  start: function(event){
+    let td = $(this)[0];
+    let tileId = td.id;
+    let startVal = $(this).position();
+    let left = startVal['left']
+    let top = startVal['top']
+    left = Math.round(left)
+    top = Math.round(top)
+    left = left.toFixed(1)
+    top = top.toFixed(1)
 
-  if (stopVal['top']>-100 && p1List.includes(tileId)){
+    $.ajax({
+        url : "",
+        type : "GET",
+        data : { 'lewa' : left, 'gora':top,
+                  'tid' : tileId},
+        success : function(json) {
+
+        },
+            error : function() {}
+    });
+  }
+},{
+ stop: function(event, ui){
+  let td = $(this)[0];
+  let tileId = td.id;
+  let stopVal = $(this).position();
+  if (p1List.includes(tileId) || p2List.includes(tileId)) {
+    if (stopVal['top']>-100 && p1List.includes(tileId)){
     stopVal['top']=2
     stopVal['left']=2
   } else if  (stopVal['top']>-100 && p2List.includes(tileId)) {
@@ -131,8 +153,8 @@ $('.tiles').draggable({
 }
 }
 
-var left = stopVal['left']
-var top = stopVal['top']
+let left = stopVal['left']
+let top = stopVal['top']
 left = Math.round(left)
 top = Math.round(top)
 left = left.toFixed(1)
@@ -142,42 +164,48 @@ top = top.toFixed(1)
       type : "GET",
       data : { 'left' : left, 'to':top,
                 't' : tileId},
-      success : function(json) {},
+      success : function(json) {
+        update()
+      },
           error : function() {}
   });
+
 },
 });
 };
-
 
 $('#changePlayer').click(()=>{
 $.ajax({
     url : "",
     type : "GET",
     data : { 'p' : '1'},
-    success : function(json) {},
+    success : function(json) {
+      setTimeout(update(), 1000)
+    },
         error : function() {}
 });
 })
 
 
-
-
 function update(){
+  console.log('update')
 $.ajax({
     url : "",
     type : "GET",
     data : { },
 
     success : function(json) {
-      placeTile(json['tiles_positions'], json['currentPlayer'])
+      placeTile(json['tiles_positions'], json['currentPlayer']);
+      refresh(json['refresh_info'])
 },
         error : function() {}
 })
 }
 
+const refresh = (refreshInfo) => {
+  setTimeout(()=>{
+    if (refreshInfo){
+    update()}}, 2000)
+}
 
-
-$(document).ready(function(){
-  window.setInterval(()=>{update()}, 3500)
-})
+update()
