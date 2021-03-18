@@ -186,6 +186,18 @@ $.ajax({
 });
 })
 
+$('#undo').click(()=>{
+$.ajax({
+    url : "",
+    type : "GET",
+    data : {'undo':true},
+    success : function(json) {
+      setTimeout(update(), 500)
+    },
+        error : function() {}
+});
+})
+
 
 function update(){
   console.log('update')

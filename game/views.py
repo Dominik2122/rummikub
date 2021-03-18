@@ -52,7 +52,6 @@ class CreateGame(LoginRequiredMixin, CreateView):
             else:
                 game.start_player = game.player2
             game.save()
-            print(game.start_player)
             tiles = game.tiles.all()
             list_of_tiles = list(tiles)
             random.shuffle(list_of_tiles)
@@ -84,21 +83,30 @@ class GameDet(LoginRequiredMixin, DetailView):
                 top = request.GET['gora']
                 left = request.GET['lewa']
                 tileId = request.GET['tid']
-                prevTile = models.Tile.objects.filter(id=tileId, last = True)
-                print(prevTile)
+                prevTile = game.tiles.filter(last = True)
                 if len(list(prevTile)) != 0:
                     prevTile = prevTile.first()
-                    print(prevTile)
                     prevTile.last = False
                     prevTile.save()
 
                 tile = models.Tile.objects.get(id=tileId)
                 tile.last = True
-                tile.last_left = left
-                tile.last_top = top
-                print(tile)
-                tile.save()
+                if tile.pos_top == '2':
+                    tile.last_left = "2"
+                    tile.last_top = "2"
+                elif tile.pos_top == '3':
+                    tile.last_left = "3"
+                    tile.last_top = "3"
+                elif tile.pos_top == '1':
+                    tile.last_left = '1'
+                    tile.last_top = "1"
+                else:
+                    tile.last_left = left
+                    tile.last_top = top
 
+                tile.save()
+                prev_tile_id = str(tile.pk)
+            prev_tile_id = None
             if 'left' in request.GET and request.user == start_player:
                 top = request.GET['to']
                 left = request.GET['left']
@@ -126,6 +134,18 @@ class GameDet(LoginRequiredMixin, DetailView):
                 else:
                     game.start_player = game.player1
                 game.save()
+
+
+            if 'undo' in request.GET and request.user == start_player:
+                prevTile = game.tiles.filter(last = True)
+                if len(list(prevTile)) != 0:
+                    prev_tile = game.tiles.filter(last=True).first()
+                    prev_tile.pos_top = prev_tile.last_top
+                    prev_tile.pos_left = prev_tile.last_left
+                    prev_tile.last = False
+
+                    prev_tile.save()
+
             tiles = self.get_object().tiles.all()
             tiles_positions = []
             for tile in tiles:
@@ -143,6 +163,9 @@ class GameDet(LoginRequiredMixin, DetailView):
                 else:
                     tiles_positions.append([top, left, tile_id, color, number, 'un'])
 
+
+
+
             if request.user != start_player:
                 refresh_info = True
             else:
@@ -150,7 +173,8 @@ class GameDet(LoginRequiredMixin, DetailView):
 
             return JsonResponse({'tiles_positions':tiles_positions,
                                 'currentPlayer':start_player.username,
-                                'refresh_info':refresh_info})
+                                'refresh_info':refresh_info,
+                                'prev_tile': prev_tile_id})
 
 
 

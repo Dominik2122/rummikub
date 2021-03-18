@@ -2,7 +2,7 @@
 {% block content %}
     <h1>Welcome to Rummikub!</h1>
 
-
+    {% if user.is_authenticated %}
     <h1 class="title">Games:</h1>
 					<ul>
 					{% for game in games_list %}
@@ -10,6 +10,9 @@
 
 					{% endfor %}
 					</ul>
+    {% else %}
+    <h1> Please, log in or create account to play a game </h1>
+    {% endif %}
 
 
 
