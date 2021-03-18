@@ -23,7 +23,6 @@ Project is created with:
 * `CSS`
 * `HTML5`
 
-* `` - callback function
 
 ## Rules
 The goal of the game is to get rid of every tile from your rack!
